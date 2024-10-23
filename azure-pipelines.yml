@@ -6,14 +6,52 @@
 trigger:
 - master
 
-pool:
-  vmImage: ubuntu-latest
+pool: default
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+variables:
+# subscription details
+  - name: azureSubscription
+    value: ''
+  - name: azureSubscriptionID
+    value: ''
+# Key Vault info
+  - name: keyVaultResourceGroupName
+    value: 'KeyVaultResourceGroup'
+  - name: keyVaultName
+    value: 'KeyVault'
+  - name: projectFolder
+    value: 'Storage'
+# global config
+  - name: location
+    value: 'East US'
+
+jobs:
+  - job: AzureKeyVault
+    steps:
+      # deploy the azure Key Vault
+      - task: AzureResourceManagerTemplateDeployment@3
+        displayName: Deploying Azure KeyVAult
+        inputs:
+          deploymentScope: 'Resource Group'
+          azureResourceManagerConnection: '$(azureSubscription)'
+          subscriptionId: '$(azureSubscriptionID)'
+          action: 'Create Or Update Resource Group'
+          resourceGroupName: $(keyVaultResourceGroupName)
+          location: $(location)
+          templateLocation: 'Linked artifact'
+          csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
+          csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
+          overrideParameters: '-Secret MonSecretPassword'
+          deploymentMode: 'Incremental'
+          deploymentOutputs: 'KeyVaultDeployment'
+
+      # extract the admin password for the VMs
+      - task: AzureKeyVault@2
+        displayName: Get Secret
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          KeyVaultName: '$(keyVaultName)'
+          SecretsFilter: 'AdminPass'
+          RunAsPreJob: false
+
