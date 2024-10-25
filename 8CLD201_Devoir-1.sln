@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Storage", "Storage\Storage.deployproj", "{0264BCC5-7012-4B4A-90A4-38470B4A1158}"
+EndProject
+Project("{151D2E53-A2C4-4D7D-83FE-D05416EBD58E}") = "Application", "Application\Application.deployproj", "{326B9F9B-E042-4EE0-A230-C86EA075DF29}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0264BCC5-7012-4B4A-90A4-38470B4A1158}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0264BCC5-7012-4B4A-90A4-38470B4A1158}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0264BCC5-7012-4B4A-90A4-38470B4A1158}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0264BCC5-7012-4B4A-90A4-38470B4A1158}.Release|Any CPU.Build.0 = Release|Any CPU
+		{326B9F9B-E042-4EE0-A230-C86EA075DF29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{326B9F9B-E042-4EE0-A230-C86EA075DF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{326B9F9B-E042-4EE0-A230-C86EA075DF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{326B9F9B-E042-4EE0-A230-C86EA075DF29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5D9D74B-1F30-42A3-BA47-E206B577A734}
+	EndGlobalSection
+EndGlobal
