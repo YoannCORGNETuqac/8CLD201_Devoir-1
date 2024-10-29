@@ -19,7 +19,7 @@ variables:
   - name: keyVaultResourceGroupName
     value: 'KeyVaultResourceGroup'
   - name: keyVaultName
-    value: 'KeyVault-1'
+    value: 'KeyVault-Devoir1-1'
   - name: projectFolder
     value: 'Storage'
 # global config
