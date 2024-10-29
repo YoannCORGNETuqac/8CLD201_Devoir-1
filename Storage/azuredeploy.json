@@ -40,6 +40,12 @@
     },
     "networkAcls": {
       "type": "object"
+    },
+    "secretName": {
+      "type": "string"
+    },
+    "secretValue": {
+      "type": "securestring"
     }
   },
   "variables": {},
@@ -67,6 +73,17 @@
       },
       "tags": {},
       "dependsOn": []
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2023-08-01-preview",
+      "name": "[concat(parameters('name'), '/', parameters('secretName'))]",
+      "properties": {
+        "value": "[parameters('secretValue')]"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('name'))]"
+      ]
     }
   ],
   "outputs": {}
