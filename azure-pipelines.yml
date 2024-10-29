@@ -42,7 +42,7 @@ jobs:
           templateLocation: 'Linked artifact'
           csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
           csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
-          overrideParameters: '-Secret MonSecretPassword'
+          overrideParameters: '-secretValue $(adminPassword)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
 
@@ -52,6 +52,6 @@ jobs:
         inputs:
           azureSubscription: '$(azureSubscription)'
           KeyVaultName: '$(keyVaultName)'
-          SecretsFilter: 'AdminPass'
+          SecretsFilter: 'AdminPassword'
           RunAsPreJob: false
 
