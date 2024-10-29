@@ -12,9 +12,9 @@ pool: default
 variables:
 # subscription details
   - name: azureSubscription
-    value: ''
+    value: '8CLC201 Subscription(6aac11fe-e7b3-480d-9647-a414e649ab81)'
   - name: azureSubscriptionID
-    value: ''
+    value: '6aac11fe-e7b3-480d-9647-a414e649ab81'
 # Key Vault info
   - name: keyVaultResourceGroupName
     value: 'KeyVaultResourceGroup'
