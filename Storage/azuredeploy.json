@@ -82,11 +82,11 @@
         "[resourceId('Microsoft.KeyVault/vaults', parameters('name'))]"
       ],
       "properties": {
-        "value": "[parameters('secretValue')]",
         "contentType": "Administrator Password Use for VM",
         "attributes": {
           "enabled": true
-        }
+        },
+        "value": "[parameters('secretValue')]"
       }
     }
   ],
