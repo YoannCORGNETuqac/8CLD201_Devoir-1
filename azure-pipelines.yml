@@ -42,7 +42,7 @@ jobs:
           templateLocation: 'Linked artifact'
           csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
           csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
-          overrideParameters: '-secretValue $(adminPassword)'
+          overrideParameters: '-secretValue $(adminPassword) -name $(keyVaultName)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
 
