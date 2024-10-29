@@ -78,16 +78,17 @@
       "type": "Microsoft.KeyVault/vaults/secrets",
       "apiVersion": "2023-08-01-preview",
       "name": "[concat(parameters('name'), '/', parameters('secretName'))]",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', parameters('name'))]"
+      ],
       "properties": {
         "value": "[parameters('secretValue')]",
         "contentType": "Administrator Password Use for VM",
         "attributes": {
           "enabled": true
-        },
-        "dependsOn": [
-          "[resourceId('Microsoft.KeyVault/vaults', parameters('name'))]"
-        ]
+        }
       }
+    }
   ],
   "outputs": {}
 }
