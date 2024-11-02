@@ -46,9 +46,12 @@ jobs:
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
       
-      - task: CmdLine@2
+      - task: PowerShell@2
+        displayName: Test Secrets
         inputs:
-          script: 'Write $(adminPassword)'
+          targetType: 'inline'
+          script: |
+                Write-Host $(adminPassword)
 
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
