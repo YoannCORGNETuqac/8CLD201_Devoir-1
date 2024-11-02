@@ -41,14 +41,18 @@ jobs:
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
       
-      - task: AzureCLI@2
+      - task: AzurePowerShell@5
+        displayName: Create Secret
         inputs:
           azureSubscription: $(azureSubscription)
-          scriptType: bash
-          scriptLocation: inlineScript
-          inlineScript: |
-            az keyvault secret set --vault-name $(keyVaultName) --name $(secretName) --value $(adminPassword)
-
+          ScriptType: InlineScript
+          Inline: |
+            $KeyVaultName = "$(keyVaultName)"
+            $SecretName = "$(secretName)"
+            $SecretValue = "$(secretValue)"
+            Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $SecretName -SecretValue (ConvertTo-SecureString $SecretValue -AsPlainText -Force)
+          azurePowerShellVersion: LatestVersion
+        
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
         displayName: Get Secret
