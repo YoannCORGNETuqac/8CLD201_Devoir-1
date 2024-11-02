@@ -45,6 +45,10 @@ jobs:
           overrideParameters: '-secretValue $(adminPassword) -name $(keyVaultName)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
+      
+      - task: CmdLine@2
+        inputs:
+          script: 'Write $(adminPassword)'
 
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
