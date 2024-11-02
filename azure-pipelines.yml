@@ -11,22 +11,15 @@ pool: default
 
 variables:
 # subscription details
-  - name: azureSubscription
-    value: '8CLC201 Subscription(6aac11fe-e7b3-480d-9647-a414e649ab81)'
-  - name: azureSubscriptionID
-    value: '6aac11fe-e7b3-480d-9647-a414e649ab81'
+  azureSubscription: '8CLC201 Subscription(6aac11fe-e7b3-480d-9647-a414e649ab81)'
+  azureSubscriptionID : '6aac11fe-e7b3-480d-9647-a414e649ab81'
 # Key Vault info
-  - name: keyVaultResourceGroupName
-    value: 'KeyVaultResourceGroup'
-  - name: keyVaultName
-    value: 'KeyVault-Devoir1-1'
-  - name: projectFolder
-    value: 'Storage'
+  keyVaultResourceGroupName : 'KeyVaultResourceGroup'
+  keyVaultName : 'KeyVault-Devoir1-1'
+  projectFolder : 'Storage'
 # global config
-  - name: location
-    value: 'East US'
-  - name: adminPasswordPipeline
-    value: $(adminPassword)
+  location : 'East US'
+  secretName: 'adminPassword'
 
 jobs:
   - job: AzureKeyVault
@@ -44,16 +37,17 @@ jobs:
           templateLocation: 'Linked artifact'
           csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
           csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
-          overrideParameters: '-secretValue $(adminPasswordPipeline) -name $(keyVaultName)'
+          overrideParameters: '-name $(keyVaultName) -secretName $(secretName) -secretValue $(adminPassword)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
       
-      - task: PowerShell@2
-        displayName: Test Secrets
+      - task: AzureCLI@2
         inputs:
-          targetType: 'inline'
-          script: |
-                Write-Host $(adminPasswordPipeline)
+          azureSubscription: $(azureSubscription)
+          scriptType: bash
+          scriptLocation: inlineScript
+          inlineScript: |
+            az keyvault secret set --vault-name $(keyVaultName) --name $(secretName) --value $(adminPassword)
 
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
@@ -61,6 +55,6 @@ jobs:
         inputs:
           azureSubscription: '$(azureSubscription)'
           KeyVaultName: '$(keyVaultName)'
-          SecretsFilter: 'AdminPassword'
+          SecretsFilter: '$(secretName)'
           RunAsPreJob: false
 
