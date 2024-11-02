@@ -26,7 +26,7 @@ jobs:
     steps:
       # deploy the azure Key Vault
       - task: AzureResourceManagerTemplateDeployment@3
-        displayName: Deploying Azure KeyVAult
+        displayName: Deploying Azure Key Vault
         inputs:
           deploymentScope: 'Resource Group'
           azureResourceManagerConnection: '$(azureSubscription)'
@@ -40,18 +40,6 @@ jobs:
           overrideParameters: '-name $(keyVaultName) -secretName $(secretName) -secretValue $(adminPassword)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
-      
-      - task: AzurePowerShell@5
-        displayName: Create Secret
-        inputs:
-          azureSubscription: $(azureSubscription)
-          ScriptType: InlineScript
-          Inline: |
-            $KeyVaultName = "$(keyVaultName)"
-            $SecretName = "$(secretName)"
-            $SecretValue = "$(secretValue)"
-            Set-AzKeyVaultSecret -VaultName $KeyVaultName -Name $SecretName -SecretValue (ConvertTo-SecureString $SecretValue -AsPlainText -Force)
-          azurePowerShellVersion: LatestVersion
         
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
