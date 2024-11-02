@@ -25,6 +25,8 @@ variables:
 # global config
   - name: location
     value: 'East US'
+  - name: adminPasswordPipeline
+    value: $(adminPassword)
 
 jobs:
   - job: AzureKeyVault
@@ -42,7 +44,7 @@ jobs:
           templateLocation: 'Linked artifact'
           csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
           csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
-          overrideParameters: '-secretValue $(adminPassword) -name $(keyVaultName)'
+          overrideParameters: '-secretValue $(adminPasswordPipeline) -name $(keyVaultName)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
       
@@ -51,7 +53,7 @@ jobs:
         inputs:
           targetType: 'inline'
           script: |
-                Write-Host $(adminPassword)
+                Write-Host $(adminPasswordPipeline)
 
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
