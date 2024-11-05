@@ -9,7 +9,7 @@ variables:
   azureSubscriptionID : '6aac11fe-e7b3-480d-9647-a414e649ab81'
 # Key Vault info
   keyVaultResourceGroupName : 'KeyVaultResourceGroup'
-  keyVaultName : 'KeyVault-Devoir1-2'
+  keyVaultName : 'KeyVault-Devoir1'
   projectFolder : 'Storage'
 # global config
   location : 'East US'
