@@ -41,7 +41,7 @@ jobs:
         name: secrets
         inputs:
           azureSubscription: '$(azureSubscription)'
-          KeyVaultName: 'KeyVault-Devoir1-1'
+          KeyVaultName: '$(keyVaultName)'
           SecretsFilter: '*'
           RunAsPreJob: false
 
