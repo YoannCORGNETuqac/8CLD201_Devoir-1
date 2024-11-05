@@ -1,13 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
 pool: default
-
 
 variables:
 # subscription details
@@ -44,9 +38,10 @@ jobs:
       # extract the admin password for the VMs
       - task: AzureKeyVault@2
         displayName: Get Secret
+        name: secrets
         inputs:
-          azureSubscription: '$(azureSubscription)'
-          KeyVaultName: '$(keyVaultName)'
-          SecretsFilter: '$(secretName)'
+          azureSubscription: ''
+          KeyVaultName: 'KeyVault-Devoir1-1'
+          SecretsFilter: '*'
           RunAsPreJob: false
 
