@@ -40,7 +40,7 @@ jobs:
         displayName: Get Secret
         name: secrets
         inputs:
-          azureSubscription: ''
+          azureSubscription: '$(azureSubscription)'
           KeyVaultName: 'KeyVault-Devoir1-1'
           SecretsFilter: '*'
           RunAsPreJob: false
