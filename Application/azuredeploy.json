@@ -106,6 +106,9 @@
         },
         "autoRepairsAction": {
             "type": "string"
+        },
+        "customData": {
+          "value": "string"
         }
     },
     "variables": {
