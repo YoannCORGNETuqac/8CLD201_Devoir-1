@@ -48,12 +48,15 @@ jobs:
           SecretsFilter: '*'
           RunAsPreJob: false
 
+
   - job: VmScaleSet
     dependsOn: AzureKeyVault
     variables:
       keyVaultAdminPassword: $[ dependencies.Job1.outputs['secrets.AdminPassword'] ]
     steps:
-    
+
+    - script: |
+        echo $(keyVaultAdminPassword)
 
     # Copy website in the Vms
     - task: CopyFiles@2
