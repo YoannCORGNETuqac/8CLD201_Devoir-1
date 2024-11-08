@@ -50,6 +50,8 @@ jobs:
 
   - job: VmScaleSet
     dependsOn: AzureKeyVault
+    variables:
+      keyVaultAdminPassword: $[ dependencies.Job1.outputs['secrets.AdminPassword'] ]
     steps:
     
     # Copy website in the Vms
@@ -82,6 +84,6 @@ jobs:
         templateLocation: 'Linked artifact'
         csmFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.json'
         csmParametersFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.parameters.json'
-        overrideParameters: '-customData $(deploymentScript) -adminPassword $(secrets.AdminPassword)'
+        overrideParameters: '-customData $(deploymentScript) -adminPassword $(keyVaultAdminPassword)'
         deploymentMode: 'Incremental'
     
