@@ -8,12 +8,15 @@ variables:
   azureSubscription: '8CLC201 Subscription(6aac11fe-e7b3-480d-9647-a414e649ab81)'
   azureSubscriptionID : '6aac11fe-e7b3-480d-9647-a414e649ab81'
 # Key Vault info
+  storageFolder : 'Storage'
   keyVaultResourceGroupName : 'KeyVaultResourceGroup'
   keyVaultName : 'KeyVault-Devoir1-3'
-  projectFolder : 'Storage'
+# Vm Scale Set
+  appFolder : 'Application'
+  VmResourceGroupName : 'VmResourceGroup'
+  deploymentScript: ""
 # global config
   location : 'East US'
-  secretName: 'adminPassword'
 
 jobs:
   - job: AzureKeyVault
@@ -29,9 +32,9 @@ jobs:
           resourceGroupName: $(keyVaultResourceGroupName)
           location: $(location)
           templateLocation: 'Linked artifact'
-          csmFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.json'
-          csmParametersFile: '$(Build.SourcesDirectory)\$(projectFolder)\azuredeploy.parameters.json'
-          overrideParameters: '-name $(keyVaultName) -secretName $(secretName) -secretValue $(adminPassword)'
+          csmFile: '$(Build.SourcesDirectory)\$(storageFolder)\azuredeploy.json'
+          csmParametersFile: '$(Build.SourcesDirectory)\$(storageFolder)\azuredeploy.parameters.json'
+          overrideParameters: '-name $(keyVaultName) -secretValue $(adminPassword)'
           deploymentMode: 'Incremental'
           deploymentOutputs: 'KeyVaultDeployment'
         
@@ -45,3 +48,40 @@ jobs:
           SecretsFilter: '*'
           RunAsPreJob: false
 
+  - job: VmScaleSet
+    dependsOn: AzureKeyVault
+    steps:
+    
+    # Copy website in the Vms
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'Application/src/'
+        Contents: '**'
+        TargetFolder: '/src/'
+
+    # Load deplyment script in the  deploymentScript varriable
+    - task: PowerShell@2
+      inputs:
+        targetType: 'inline'
+        script: |
+          $CloudContent = Get-Content -Path .\$(appFolder)\Cloud-init.txt -Raw
+          Write-Host $CloudContent
+          $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
+          Write-Host $encodedContent
+          Write-Host "##vso[task.setvariable variable=deploymentScript;]$encodedContent"
+
+    # deploy the azure Key Vault
+    - task: AzureResourceManagerTemplateDeployment@3
+      inputs:
+        deploymentScope: 'Resource Group'
+        azureResourceManagerConnection: '$(azureSubscription)'
+        subscriptionId: '$(azureSubscriptionID)'
+        action: 'Create Or Update Resource Group'
+        resourceGroupName: '$(VmResourceGroupName)'
+        location: '$(location)'
+        templateLocation: 'Linked artifact'
+        csmFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.json'
+        csmParametersFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.parameters.json'
+        overrideParameters: '-customData $(deploymentScript) -adminPassword $(secrets.AdminPassword)'
+        deploymentMode: 'Incremental'
+    
