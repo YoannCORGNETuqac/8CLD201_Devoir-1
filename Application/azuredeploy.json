@@ -396,7 +396,8 @@
                             "patchSettings": {
                                 "patchMode": "ImageDefault"
                             }
-                        }
+                        },
+                        "customData": "[parameters('customData')]"
                     },
                     "securityProfile": {
                         "securityType": "[parameters('securityType')]",
