@@ -2,61 +2,131 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "loadBalancers_LoadBalancer_name": {
+        "location": {
+            "value": "canadacentral"
+        },
+        "osDiskType": {
+            "value": "StandardSSD_LRS"
+        },
+        "addressPrefixes": {
+            "value": [
+                "10.0.0.0/16"
+            ]
+        },
+        "subnets": {
+            "value": [
+                {
+                    "name": "default",
+                    "properties": {
+                        "addressPrefix": "10.0.0.0/20"
+                    }
+                }
+            ]
+        },
+        "virtualNetworkId": {
+            "value": "/subscriptions/6aac11fe-e7b3-480d-9647-a414e649ab81/resourceGroups/VmResourceGroup/providers/Microsoft.Network/virtualNetworks/VmResourceGroup-vnet"
+        },
+        "virtualNetworkName": {
+            "value": "VmResourceGroup-vnet"
+        },
+        "networkSecurityGroups": {
+            "value": [
+                {
+                    "name": "basicNsgVmResourceGroup-vnet-nic01",
+                    "id": "/subscriptions/6aac11fe-e7b3-480d-9647-a414e649ab81/resourceGroups/VmResourceGroup/providers/Microsoft.Network/networkSecurityGroups/basicNsgVmResourceGroup-vnet-nic01",
+                    "rules": [
+                        {
+                            "name": "Tcp",
+                            "properties": {
+                                "priority": 300,
+                                "protocol": "Tcp",
+                                "access": "Allow",
+                                "direction": "Inbound",
+                                "sourceAddressPrefix": "*",
+                                "sourcePortRange": "*",
+                                "destinationAddressPrefix": "*",
+                                "destinationPortRange": "80"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "networkInterfaceConfigurations": {
+            "value": [
+                {
+                    "name": "VmResourceGroup-vnet-nic01",
+                    "primary": true,
+                    "subnetId": "/subscriptions/6aac11fe-e7b3-480d-9647-a414e649ab81/resourceGroups/VmResourceGroup/providers/Microsoft.Network/virtualNetworks/VmResourceGroup-vnet/subnets/default",
+                    "applicationGatewayBackendAddressPools": [],
+                    "loadBalancerBackendAddressPools": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools', parameters('loadBalancerName'), parameters('backendPoolName'))]"
+                        }
+                    ],
+                    "applicationSecurityGroups": [],
+                    "loadBalancerInboundNatPools": [],
+                    "enableAcceleratedNetworking": false,
+                    "nsgName": "basicNsgVmResourceGroup-vnet-nic01",
+                    "nsgId": "/subscriptions/6aac11fe-e7b3-480d-9647-a414e649ab81/resourceGroups/VmResourceGroup/providers/Microsoft.Network/networkSecurityGroups/basicNsgVmResourceGroup-vnet-nic01",
+                    "pipName": "publicIp-VmResourceGroup-vnet-nic01"
+                }
+            ]
+        },
+        "backendPoolName": {
+            "value": "bepool"
+        },
+        "loadBalancerName": {
+            "value": "LoadBalancer"
+        },
+        "loadbalancingRuleFrontEndPort": {
+            "value": 80
+        },
+        "loadbalancingRuleBackendEndPort": {
+            "value": 80
+        },
+        "loadbalancingRuleProtocol": {
+            "value": "Tcp"
+        },
+        "InboundNATRuleFrontEndPortRangeStart": {
+            "value": 50000
+        },
+        "vmName": {
+            "value": "VmScaleSet"
+        },
+        "virtualMachineScaleSetName": {
+            "value": "VmScaleSet"
+        },
+        "instanceCount": {
+            "value": "2"
+        },
+        "instanceSize": {
+            "value": "Standard_D2s_v3"
+        },
+        "platformFaultDomainCount": {
+            "value": "1"
+        },
+        "scaleInPolicy": {
+            "value": {
+                "rules": [
+                    "Default"
+                ],
+                "forceDeletion": false
+            }
+        },
+        "upgradePolicy": {
+            "value": "Manual"
+        },
+        "hibernationEnabled": {
+            "value": false
+        },
+        "adminUsername": {
+            "value": "vmadmin"
+        },
+        "adminPassword": {
             "value": null
         },
-        "loadBalancers_LoadbalencerTp1_name": {
-            "value": null
-        },
-        "virtualNetworks_daouda_group_vnet_name": {
-            "value": null
-        },
-        "virtualMachineScaleSets_VmScaleSet_name": {
-            "value": null
-        },
-        "virtualMachines_VmScaleSet_2c521289_name": {
-            "value": null
-        },
-        "virtualMachines_VmScaleSet_629f69f2_name": {
-            "value": null
-        },
-        "virtualMachines_VmScaleSet_d50bf443_name": {
-            "value": null
-        },
-        "virtualNetworks_VmResourceGroup_vnet_name": {
-            "value": null
-        },
-        "autoscalesettings_VmScaleSetautoscale_name": {
-            "value": null
-        },
-        "publicIPAddresses_LoadBalancer_publicip_name": {
-            "value": null
-        },
-        "publicIPAddresses_LoadbalencerTp1_publicip_name": {
-            "value": null
-        },
-        "networkInterfaces_VmResourceGroup_vnet_nic01_723e4a3b_name": {
-            "value": null
-        },
-        "networkInterfaces_VmResourceGroup_vnet_nic01_bce83911_name": {
-            "value": null
-        },
-        "networkInterfaces_VmResourceGroup_vnet_nic01_c8bea5ba_name": {
-            "value": null
-        },
-        "networkSecurityGroups_basicNsgdaouda_group_vnet_nic01_name": {
-            "value": null
-        },
-        "networkSecurityGroups_basicNsgVmResourceGroup_vnet_nic01_name": {
-            "value": null
-        },
-        "publicIPAddresses_publicIp_VmResourceGroup_vnet_nic01_723e4a3b_name": {
-            "value": null
-        },
-        "publicIPAddresses_publicIp_VmResourceGroup_vnet_nic01_bce83911_name": {
-            "value": null
-        },
-        "publicIPAddresses_publicIp_VmResourceGroup_vnet_nic01_c8bea5ba_name": {
+        "customData": {
             "value": null
         }
     }
