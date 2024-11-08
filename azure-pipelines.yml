@@ -88,6 +88,6 @@ jobs:
         templateLocation: 'Linked artifact'
         csmFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.json'
         csmParametersFile: '$(Build.SourcesDirectory)\$(appFolder)\azuredeploy.parameters.json'
-        overrideParameters: '-customData $(deploymentScript) -adminPassword $(adminPassword)'
+        overrideParameters: '-customData $(deploymentScript) -adminPassword $(keyVaultAdminPassword)'
         deploymentMode: 'Incremental'
     
