@@ -52,7 +52,7 @@ jobs:
   - job: VmScaleSet
     dependsOn: AzureKeyVault
     variables:
-      keyVaultAdminPassword: $[ dependencies.AzureKeyVault.outputs['secrets.AdminPassword'] ]
+      keyVaultAdminPassword: "$[ dependencies.AzureKeyVault.outputs['secrets.AdminPassword'] ]"
     steps:
 
     # Copy website in the Vms
