@@ -20,4 +20,5 @@ runcmd:
   - mkdir -p /home/myapp/public  # Create directory for website files
   - cp -r /src/* /home/myapp/public/  # Copy HTML/CSS/JS files to public directory
   - chown -R www-data:www-data /home/myapp/public  # Set permissions
+  - chmod -R 755 /home/myapp/public  # Ensure read/execute permissions
   - service nginx restart  # Restart NGINX to apply the new configuration
