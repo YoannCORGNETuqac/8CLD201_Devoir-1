@@ -61,7 +61,7 @@ jobs:
       inputs:
         SourceFolder: 'Application/src/'
         Contents: '**'
-        TargetFolder: '/src/'
+        TargetFolder: '/var/www/html/'
 
     # Load deplyment script in the  deploymentScript varriable
     - task: PowerShell@2
