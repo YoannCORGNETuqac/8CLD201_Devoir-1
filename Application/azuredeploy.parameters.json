@@ -24,7 +24,7 @@
             ]
         },
         "virtualNetworkId": {
-            "value": "/subscriptions/0f68300b-bc8a-49c8-9568-260a8355d449/resourceGroups/daouda_group/providers/Microsoft.Network/virtualNetworks/daouda_group-vnet"
+            "value": "/subscriptions/541348cc-ee3c-4b34-bed3-331ccf2bfeeb/resourceGroups/daouda_group/providers/Microsoft.Network/virtualNetworks/daouda_group-vnet"
         },
         "virtualNetworkName": {
             "value": "daouda_group-vnet"
@@ -33,7 +33,7 @@
             "value": [
                 {
                     "name": "basicNsgdaouda_group-vnet-nic01",
-                    "id": "/subscriptions/0f68300b-bc8a-49c8-9568-260a8355d449/resourceGroups/daouda_group/providers/Microsoft.Network/networkSecurityGroups/basicNsgdaouda_group-vnet-nic01",
+                    "id": "/subscriptions/541348cc-ee3c-4b34-bed3-331ccf2bfeeb/resourceGroups/daouda_group/providers/Microsoft.Network/networkSecurityGroups/basicNsgdaouda_group-vnet-nic01",
                     "rules": [
                         {
                             "name": "Tcp",
@@ -57,7 +57,7 @@
                 {
                     "name": "daouda_group-vnet-nic01",
                     "primary": true,
-                    "subnetId": "/subscriptions/0f68300b-bc8a-49c8-9568-260a8355d449/resourceGroups/daouda_group/providers/Microsoft.Network/virtualNetworks/daouda_group-vnet/subnets/default",
+                    "subnetId": "/subscriptions/541348cc-ee3c-4b34-bed3-331ccf2bfeeb/resourceGroups/daouda_group/providers/Microsoft.Network/virtualNetworks/daouda_group-vnet/subnets/default",
                     "applicationGatewayBackendAddressPools": [],
                     "loadBalancerBackendAddressPools": [
                         {
@@ -68,7 +68,7 @@
                     "loadBalancerInboundNatPools": [],
                     "enableAcceleratedNetworking": false,
                     "nsgName": "basicNsgdaouda_group-vnet-nic01",
-                    "nsgId": "/subscriptions/0f68300b-bc8a-49c8-9568-260a8355d449/resourceGroups/daouda_group/providers/Microsoft.Network/networkSecurityGroups/basicNsgdaouda_group-vnet-nic01",
+                    "nsgId": "/subscriptions/541348cc-ee3c-4b34-bed3-331ccf2bfeeb/resourceGroups/daouda_group/providers/Microsoft.Network/networkSecurityGroups/basicNsgdaouda_group-vnet-nic01",
                     "pipName": "publicIp-daouda_group-vnet-nic01"
                 }
             ]
