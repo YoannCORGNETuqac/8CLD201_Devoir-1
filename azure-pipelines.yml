@@ -64,7 +64,7 @@ jobs:
       inputs:
         targetType: 'inline'
         script: |
-          $CloudContent = Get-Content -Path .\$(appFolder)\Cloud-init.txt -Raw
+          $CloudContent = Get-Content -Path .\$(appFolder)\deploymentScript.yml -Raw
           Write-Host $CloudContent
           $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
           Write-Host $encodedContent
