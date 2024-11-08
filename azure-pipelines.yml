@@ -16,7 +16,7 @@ variables:
   VmResourceGroupName : 'VmResourceGroup'
   deploymentScript: ""
 # global config
-  location : 'East US'
+  location : 'canadacentral'
 
 jobs:
   - job: AzureKeyVault
@@ -54,8 +54,10 @@ jobs:
       keyVaultAdminPassword: $[ dependencies.Job1.outputs['secrets.AdminPassword'] ]
     steps:
     
+
     # Copy website in the Vms
     - task: CopyFiles@2
+      displayName: Copy source code in Vms
       inputs:
         SourceFolder: 'Application/src/'
         Contents: '**'
@@ -63,6 +65,7 @@ jobs:
 
     # Load deplyment script in the  deploymentScript varriable
     - task: PowerShell@2
+      displayName: Decode deployment script
       inputs:
         targetType: 'inline'
         script: |
@@ -74,6 +77,7 @@ jobs:
 
     # deploy the azure Key Vault
     - task: AzureResourceManagerTemplateDeployment@3
+      displayName: Deploy App Ressources 
       inputs:
         deploymentScope: 'Resource Group'
         azureResourceManagerConnection: '$(azureSubscription)'
